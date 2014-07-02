@@ -93,6 +93,6 @@ void FlyBird::paintEvent(QPaintEvent * paintEvent)
         }
     }
     painter.rotate(0);
-    qDebug()<<"rect size"<<rect.width()<<rect.height();
+    //qDebug()<<"rect size"<<rect.width()<<rect.height();
     painter.drawPixmap(rect,pix);
 }
