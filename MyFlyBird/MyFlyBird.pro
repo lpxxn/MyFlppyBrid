@@ -10,9 +10,11 @@ RESOURCES += \
 
 HEADERS += \
     flybird.h \
-    mainwindow.h
+    mainwindow.h \
+    blockpipe.h
 
 SOURCES += \
     flybird.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    blockpipe.cpp

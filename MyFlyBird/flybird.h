@@ -7,6 +7,7 @@
 
 /*!
  * \brief The FlyBird class
+ * 小鸟
  */
 class FlyBird : public QWidget
 {
@@ -49,13 +50,10 @@ protected:
     void paintEvent(QPaintEvent *);
 
 private:
-    double rale;
-    double x;
-    int zt;
-    double ztr;
-    int co;
+    double rale;    //旋转角度
     QTimer * timer;
-    QStringList src;
+    QRect rect;
+    QStringList m_birdImage;    //存放小鸟的图片
 };
 
 #endif // FLYBIRD_H
