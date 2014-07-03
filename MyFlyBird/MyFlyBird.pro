@@ -11,10 +11,12 @@ RESOURCES += \
 HEADERS += \
     flybird.h \
     mainwindow.h \
-    blockpipe.h
+    blockpipe.h \
+    moveground.h
 
 SOURCES += \
     flybird.cpp \
     main.cpp \
     mainwindow.cpp \
-    blockpipe.cpp
+    blockpipe.cpp \
+    moveground.cpp

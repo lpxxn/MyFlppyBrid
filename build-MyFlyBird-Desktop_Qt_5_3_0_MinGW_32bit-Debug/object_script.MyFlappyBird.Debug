@@ -1,0 +1,12 @@
+INPUT(
+./debug\flybird.o
+./debug\main.o
+./debug\mainwindow.o
+./debug\blockpipe.o
+./debug\moveground.o
+./debug\qrc_MyResource.o
+./debug\moc_flybird.o
+./debug\moc_mainwindow.o
+./debug\moc_blockpipe.o
+./debug\moc_moveground.o
+);

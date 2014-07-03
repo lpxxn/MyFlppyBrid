@@ -61,7 +61,7 @@ void FlyBird::paintEvent(QPaintEvent * paintEvent)
     if(rale>=-30&&rale<=90)
     {
         painter.rotate(rale);
-        rale+=0.5;
+        rale+=0.9;
     }
     else if(rale>=90)
     {

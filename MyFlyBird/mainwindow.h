@@ -6,7 +6,7 @@
 #include <QVector>
 #include "flybird.h"
 #include "blockpipe.h"
-
+#include "moveground.h"
 class QPushButton;
 class MainWindow : public QMainWindow
 {
@@ -74,6 +74,9 @@ private:
      * 游戏结束
      */
     void gameOver();
+
+    //
+    MoveGround * m_Ground;
     // QWidget interface
 protected:
     void mousePressEvent(QMouseEvent *);

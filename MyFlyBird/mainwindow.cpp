@@ -18,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //小鸟
     m_Bird =new FlyBird(this);
+
     InitBird();
     m_birdTimer = new QTimer(this);
     connect(m_birdTimer,SIGNAL(timeout()),this,SLOT(birdFlppy()));
@@ -33,6 +34,9 @@ MainWindow::MainWindow(QWidget *parent) :
     start_Button->setFixedSize(140,80);
     start_Button->move((WINDOWWHITE-start_Button->width())/2,WINDOWHEIGHT/2);
     connect(start_Button,SIGNAL(clicked()),this,SLOT(startGame()));
+
+    m_Ground = new MoveGround(this);
+    m_Ground->move(0,WINDOWHEIGHT - 60);
 }
 
 void MainWindow::InitBird()
@@ -45,7 +49,7 @@ void MainWindow::initBirdFlyData()
 {
     m_birdFlyData<<-3<<-3<<-3<<-3
                  <<-4<<-4<<-4<<-4<<-4
-                 <<-3<<-3<<-3<<-3
+                 <<-3<<-3<<-3<<-3<<-3
                  <<-2<<-2<<-2<<-2<<-2<<-2
                  <<-1<<-1<<-1<<-1<<-1<<-1<<-1<<-1
                  <<0<<0<<0
@@ -78,9 +82,9 @@ void MainWindow::birdFlppy()
     {
         m_birdFlyIterator=m_birdFlyIteratorEnd;
     }
-    if(m_Bird->pos().y()+m_Bird->height()>=WINDOWHEIGHT)
+    if(m_Bird->pos().y()+m_Bird->height()>=WINDOWHEIGHT - m_Ground->height())
     {         
-        m_Bird->move(m_Bird->pos().x(),WINDOWHEIGHT - m_Bird->height()+5);
+        m_birdTimer->stop();
         gameOver();
     }
 }
@@ -88,7 +92,8 @@ void MainWindow::birdFlppy()
 void MainWindow::startGame()
 {
     InitBird();
-
+    createPipes();
+    m_Ground->play();
     start_Button->setVisible(false);
     int timeIter=8;
     m_birdTimer->start(timeIter);
@@ -97,7 +102,7 @@ void MainWindow::startGame()
 
 void MainWindow::initPipes()
 {
-    m_PipeSpacing = 150;
+    m_PipeSpacing = 170;
     for(int i=0;i<m_PipesCount;i++) {
         m_Pipes.push_back(new BlockPipe(this));
     }
@@ -109,8 +114,8 @@ void MainWindow::createPipes()
     int pipeStartX=500;  //起始的管子
     int pipY;
     for(int i=0;i<m_PipesCount;i++) {
-        pipY = qrand()%150;
-        m_Pipes[i]->move(pipeStartX+i*m_PipeSpacing,pipY-140);
+        pipY = qrand()%180;
+        m_Pipes[i]->move(pipeStartX+i*m_PipeSpacing,pipY-210);
     }
     m_lastPipeIndex = m_Pipes.count()-1;
 }
@@ -118,12 +123,11 @@ void MainWindow::createPipes()
 void MainWindow::pipeManage()
 {
     int pipY;
-
     for(int i =0; i<m_PipesCount;i++) {
         m_Pipes[i]->move(m_Pipes[i]->pos().x()-1,m_Pipes[i]->pos().y());
         if(m_Pipes[i]->pos().x()<-60) {
-            pipY = qrand()%150;
-            m_Pipes[i]->move(m_Pipes[m_lastPipeIndex]->pos().x()+m_PipeSpacing,pipY-140);
+            pipY = qrand()%180;
+            m_Pipes[i]->move(m_Pipes[m_lastPipeIndex]->pos().x()+m_PipeSpacing,pipY-210);
             m_lastPipeIndex=i;
         }
     }
@@ -134,9 +138,9 @@ void MainWindow::collisionDetect()
     int birdX = m_Bird->pos().x();
     for(int i=0;i<m_PipesCount;i++) {
         int pipeX=m_Pipes[i]->x();
-        if(birdX>=pipeX&&birdX+m_Bird->width()<=pipeX+m_Pipes[i]->width()) {
+        if(birdX+m_Bird->width()>=pipeX&&birdX<=pipeX+m_Pipes[i]->width()) {
             int pipHeihgt = m_Pipes[i]->getPipeHeight()+m_Pipes[i]->pos().y();
-            if(m_Bird->pos().y()<=(pipHeihgt)||m_Bird->pos().y()>=(pipHeihgt+ m_Pipes[i]->getPipeGap())){
+            if(m_Bird->pos().y()<=(pipHeihgt)||(m_Bird->pos().y()+m_Bird->height()/2)>=(pipHeihgt+ m_Pipes[i]->getPipeGap())){
                 gameOver();
                 break;
             }
@@ -146,9 +150,8 @@ void MainWindow::collisionDetect()
 
 void MainWindow::gameOver()
 {
-    m_birdTimer->stop();
+    m_Ground->stop();
     m_PiperTimer->stop();
-    createPipes();
     start_Button->setVisible(true);
 
 }

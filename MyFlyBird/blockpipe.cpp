@@ -6,7 +6,7 @@
 BlockPipe::BlockPipe(QWidget *parent) :
     QWidget(parent)
 {
-    setPipeGap(140);
+    setPipeGap(135);
 }
 
 void BlockPipe::paintEvent(QPaintEvent *)

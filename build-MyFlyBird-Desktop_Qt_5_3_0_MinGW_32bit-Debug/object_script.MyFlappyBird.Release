@@ -1,0 +1,12 @@
+INPUT(
+./release\flybird.o
+./release\main.o
+./release\mainwindow.o
+./release\blockpipe.o
+./release\moveground.o
+./release\qrc_MyResource.o
+./release\moc_flybird.o
+./release\moc_mainwindow.o
+./release\moc_blockpipe.o
+./release\moc_moveground.o
+);
