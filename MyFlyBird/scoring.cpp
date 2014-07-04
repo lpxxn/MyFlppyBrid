@@ -40,15 +40,18 @@ void Scoring::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
     QPixmap pix;
-    if(m_strList.count()>0) {
-        for(int i=0;i<m_strList.count();i++) {
-
-            pix.load(m_NumberImg.at(m_strList.at(i).toInt()));
-            painter.drawPixmap(i*18,0,pix);
-        }
-    }
-    else {
+    if(m_strList.count()==0) {
         pix.load(m_NumberImg.at(0));
-        painter.drawPixmap(0,0,pix);
+        painter.drawPixmap(IMGPIXWIDTH,0,pix);
+    }
+    else if(m_strList.count()==1) {
+        pix.load(m_NumberImg.at(m_strList.at(0).toInt()));
+        painter.drawPixmap(IMGPIXWIDTH,0,pix);
+    }
+    else if(m_strList.count()>1) {
+        for(int i=0;i<m_strList.count();i++) {
+            pix.load(m_NumberImg.at(m_strList.at(i).toInt()));
+            painter.drawPixmap(i*IMGPIXWIDTH,0,IMGPIXWIDTH,36,pix);
+        }
     }
 }

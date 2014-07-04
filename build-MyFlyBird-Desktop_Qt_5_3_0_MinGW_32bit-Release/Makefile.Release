@@ -101,7 +101,7 @@ release/MyFlappyBird_resource_res.o: MyFlappyBird_resource.rc
 	windres -i MyFlappyBird_resource.rc -o release\MyFlappyBird_resource_res.o --include-dir=. $(DEFINES)
 
 qmake: FORCE
-	@$(QMAKE) -spec win32-g++ CONFIG+=debug -o Makefile.Release ..\MyFlyBird\MyFlyBird.pro
+	@$(QMAKE) -spec win32-g++ -o Makefile.Release ..\MyFlyBird\MyFlyBird.pro
 
 qmake_all: FORCE
 
@@ -128,35 +128,35 @@ compiler_rcc_make_all: release/qrc_MyResource.cpp
 compiler_rcc_clean:
 	-$(DEL_FILE) release\qrc_MyResource.cpp
 release/qrc_MyResource.cpp: ../MyFlyBird/MyResource.qrc \
-		../MyFlyBird/Images/ready.png \
-		../MyFlyBird/Images/bird.ico \
-		../MyFlyBird/Images/ground.png \
-		../MyFlyBird/Images/medal0.png \
-		../MyFlyBird/Images/medal1.png \
-		../MyFlyBird/Images/medal2.png \
-		../MyFlyBird/Images/bird1.png \
-		../MyFlyBird/Images/bird2.png \
-		../MyFlyBird/Images/rank.png \
-		../MyFlyBird/Images/bird3.png \
-		../MyFlyBird/Images/scoreboard.png \
-		../MyFlyBird/Images/guid1.png \
-		../MyFlyBird/Images/replay.png \
-		../MyFlyBird/Images/guid2.png \
-		../MyFlyBird/Images/guid3.png \
 		../MyFlyBird/Images/pipe1.png \
 		../MyFlyBird/Images/pipe2.png \
-		../MyFlyBird/Images/gameover.png \
+		../MyFlyBird/Images/rank.png \
+		../MyFlyBird/Images/ready.png \
+		../MyFlyBird/Images/replay.png \
 		../MyFlyBird/Images/bg.png \
+		../MyFlyBird/Images/bird1.png \
+		../MyFlyBird/Images/bird2.png \
+		../MyFlyBird/Images/bird3.png \
+		../MyFlyBird/Images/ground.png \
+		../MyFlyBird/Images/bird.ico \
+		../MyFlyBird/Images/medal0.png \
+		../MyFlyBird/Images/medal1.png \
+		../MyFlyBird/Images/guid1.png \
+		../MyFlyBird/Images/medal2.png \
+		../MyFlyBird/Images/guid2.png \
+		../MyFlyBird/Images/gameover.png \
+		../MyFlyBird/Images/guid3.png \
+		../MyFlyBird/Images/scoreboard.png \
+		../MyFlyBird/Images/scoreNumber/0.png \
+		../MyFlyBird/Images/scoreNumber/4.png \
+		../MyFlyBird/Images/scoreNumber/8.png \
 		../MyFlyBird/Images/scoreNumber/3.png \
 		../MyFlyBird/Images/scoreNumber/7.png \
 		../MyFlyBird/Images/scoreNumber/2.png \
 		../MyFlyBird/Images/scoreNumber/6.png \
 		../MyFlyBird/Images/scoreNumber/1.png \
 		../MyFlyBird/Images/scoreNumber/5.png \
-		../MyFlyBird/Images/scoreNumber/9.png \
-		../MyFlyBird/Images/scoreNumber/0.png \
-		../MyFlyBird/Images/scoreNumber/4.png \
-		../MyFlyBird/Images/scoreNumber/8.png
+		../MyFlyBird/Images/scoreNumber/9.png
 	C:\Qt\Qt5.3.0\5.3\mingw482_32\bin\rcc.exe -name MyResource ..\MyFlyBird\MyResource.qrc -o release\qrc_MyResource.cpp
 
 compiler_moc_header_make_all: release/moc_flybird.cpp release/moc_mainwindow.cpp release/moc_blockpipe.cpp release/moc_moveground.cpp release/moc_scoring.cpp
@@ -941,8 +941,7 @@ release/main.o: ../MyFlyBird/main.cpp C:/Qt/Qt5.3.0/5.3/mingw482_32/include/QtWi
 		C:/Qt/Qt5.3.0/5.3/mingw482_32/include/QtWidgets/QWidget \
 		../MyFlyBird/blockpipe.h \
 		../MyFlyBird/moveground.h \
-		../MyFlyBird/scoring.h \
-		C:/Qt/Qt5.3.0/5.3/mingw482_32/include/QtCore/QDebug
+		../MyFlyBird/scoring.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\main.o ..\MyFlyBird\main.cpp
 
 release/mainwindow.o: ../MyFlyBird/mainwindow.cpp ../MyFlyBird/mainwindow.h \

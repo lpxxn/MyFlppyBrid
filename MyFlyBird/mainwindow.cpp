@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     //计分
     m_scor = new Scoring(this);
-    m_scor->move((WINDOWWHITE - m_scor->width()+50)/2,50);
+    m_scor->move((WINDOWWHITE - m_scor->width())/2,50);
 }
 
 void MainWindow::InitBird()
@@ -136,18 +136,13 @@ void MainWindow::pipeManage()
             m_Pipes[i]->move(m_Pipes[m_lastPipeIndex]->pos().x()+m_PipeSpacing,pipY-210);
             m_lastPipeIndex=i;
             m_HaveScor = false;
+            break;
         }
         //计分
-        if(m_Pipes[i]->pos().x()<m_Bird->x()-m_Pipes[i]->width()&&!m_HaveScor) {
-            m_HaveScor = true;
-
+        if(m_Pipes[i]->pos().x()<(m_Bird->pos().x()-m_Pipes[i]->width())&&!m_HaveScor) {
             m_scor->TotalScor();
-            if(m_scor->getScor()<10) {
-                m_scor->move((WINDOWWHITE - m_scor->width()+50)/2,50);
-            }
-            else if(m_scor->getScor()<100) {
-                m_scor->move((WINDOWWHITE - m_scor->width())/2,50);
-            }
+            m_HaveScor = true;
+             break;
         }
     }
 }
@@ -165,7 +160,6 @@ void MainWindow::collisionDetect()
                 break;
             }            
         }
-
     }
 }
 

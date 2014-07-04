@@ -12,7 +12,7 @@ BlockPipe::BlockPipe(QWidget *parent) :
 void BlockPipe::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing,true);
+    //painter.setRenderHint(QPainter::Antialiasing,true);
     QPixmap pix;
     pix.load("://Images/pipe1.png");
     painter.drawPixmap(0,0,PIPEWIDTH,PIPEHEIGHT,pix);

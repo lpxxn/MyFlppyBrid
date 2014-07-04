@@ -6,7 +6,7 @@ MoveGround::MoveGround(QWidget *parent) :
     QWidget(parent)
 {
     this->setFixedSize(400,60);
-    this->setStyleSheet("://Images/ground.png");
+
     m_bgX = 0;
     m_timer=new QTimer();
     connect(m_timer,SIGNAL(timeout()),this,SLOT(groundMove()));
@@ -20,7 +20,7 @@ MoveGround::~MoveGround()
 
 void MoveGround::play()
 {
-    m_timer->start(8);
+    m_timer->start(50);
 }
 
 void MoveGround::stop()
