@@ -2,7 +2,7 @@
 #include <QApplication>
 #include "mainwindow.h"
 #include <QDebug>
-#include <blockpipe.h>
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
@@ -11,8 +11,9 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
 
-//    BlockPipe b;
-//    b.show();
-
+    QRectF r1(100, 200, 11, 16);
+    qDebug()<<r1.x()<<r1.y()<<r1.width()<<r1.height();
+    r1.translate(-6.1,2.3);
+    qDebug()<<r1.x()<<r1.y()<<r1.width()<<r1.height();
     return a.exec();
 }

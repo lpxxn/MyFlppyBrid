@@ -27,7 +27,7 @@ int BlockPipe::getPipeGap() const
 
 void BlockPipe::setPipeGap(int PipeGap)
 {
-    this->setFixedSize(PIPEWIDTH,PipeGap+500);
+    this->setFixedSize(PIPEWIDTH,PipeGap+600);
     m_PipeGap = PipeGap;
     update();
 }

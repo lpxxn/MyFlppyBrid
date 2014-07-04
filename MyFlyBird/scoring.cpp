@@ -1,0 +1,54 @@
+#include <QPainter>
+#include <QPixmap>
+#include "scoring.h"
+#include <QDebug>
+
+Scoring::Scoring(QWidget *parent) :
+    QWidget(parent),m_TotalNum(0)
+{    
+    this->setGeometry(0,0,IMGPIXWIDTH*3,36);
+    for(int i=0;i<10;i++)
+    {
+        m_NumberImg<<QString("://Images/scoreNumber/%1.png").arg(i);
+    }
+}
+
+void Scoring::TotalScor()
+{
+    m_TotalNum++;
+    m_strList.clear();
+    QString str=QString::number(m_TotalNum);
+
+    if(m_TotalNum>=10) {
+        for (int i= 0; i <= str.size()-1;i++) {
+            m_strList<<str.at(i);
+        }
+    }
+    else {
+        m_strList<<str;
+    }
+    update();
+}
+
+int Scoring::getScor()
+{
+    return m_TotalNum;
+}
+
+
+void Scoring::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    QPixmap pix;
+    if(m_strList.count()>0) {
+        for(int i=0;i<m_strList.count();i++) {
+
+            pix.load(m_NumberImg.at(m_strList.at(i).toInt()));
+            painter.drawPixmap(i*18,0,pix);
+        }
+    }
+    else {
+        pix.load(m_NumberImg.at(0));
+        painter.drawPixmap(0,0,pix);
+    }
+}

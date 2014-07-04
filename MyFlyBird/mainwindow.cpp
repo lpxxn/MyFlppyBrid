@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include "ctime"
 MainWindow::MainWindow(QWidget *parent) :
-    QMainWindow(parent)
+    QMainWindow(parent),m_HaveScor(false)
 {
     this->setFixedSize(WINDOWWHITE,WINDOWHEIGHT);
     this->setStyleSheet("background-image: url(://Images/bg.png)");
@@ -15,6 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     m_PiperTimer = new QTimer(this);
     connect(m_PiperTimer,SIGNAL(timeout()),this,SLOT(pipeManage()));
     connect(m_PiperTimer,SIGNAL(timeout()),this,SLOT(collisionDetect()));
+
+
 
     //小鸟
     m_Bird =new FlyBird(this);
@@ -37,6 +39,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     m_Ground = new MoveGround(this);
     m_Ground->move(0,WINDOWHEIGHT - 60);
+
+    //计分
+    m_scor = new Scoring(this);
+    m_scor->move((WINDOWWHITE - m_scor->width()+50)/2,50);
 }
 
 void MainWindow::InitBird()
@@ -129,6 +135,19 @@ void MainWindow::pipeManage()
             pipY = qrand()%180;
             m_Pipes[i]->move(m_Pipes[m_lastPipeIndex]->pos().x()+m_PipeSpacing,pipY-210);
             m_lastPipeIndex=i;
+            m_HaveScor = false;
+        }
+        //计分
+        if(m_Pipes[i]->pos().x()<m_Bird->x()-m_Pipes[i]->width()&&!m_HaveScor) {
+            m_HaveScor = true;
+
+            m_scor->TotalScor();
+            if(m_scor->getScor()<10) {
+                m_scor->move((WINDOWWHITE - m_scor->width()+50)/2,50);
+            }
+            else if(m_scor->getScor()<100) {
+                m_scor->move((WINDOWWHITE - m_scor->width())/2,50);
+            }
         }
     }
 }
@@ -141,10 +160,12 @@ void MainWindow::collisionDetect()
         if(birdX+m_Bird->width()>=pipeX&&birdX<=pipeX+m_Pipes[i]->width()) {
             int pipHeihgt = m_Pipes[i]->getPipeHeight()+m_Pipes[i]->pos().y();
             if(m_Bird->pos().y()<=(pipHeihgt)||(m_Bird->pos().y()+m_Bird->height()/2)>=(pipHeihgt+ m_Pipes[i]->getPipeGap())){
+
                 gameOver();
                 break;
-            }
+            }            
         }
+
     }
 }
 
@@ -153,7 +174,6 @@ void MainWindow::gameOver()
     m_Ground->stop();
     m_PiperTimer->stop();
     start_Button->setVisible(true);
-
 }
 
 MainWindow::~MainWindow()
@@ -162,5 +182,6 @@ MainWindow::~MainWindow()
     m_Pipes.clear();
     delete m_birdTimer;
     delete m_PiperTimer;
+    delete m_scor;
 }
 

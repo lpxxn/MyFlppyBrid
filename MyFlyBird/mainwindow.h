@@ -7,6 +7,7 @@
 #include "flybird.h"
 #include "blockpipe.h"
 #include "moveground.h"
+#include "scoring.h"
 class QPushButton;
 class MainWindow : public QMainWindow
 {
@@ -59,7 +60,7 @@ private:
     //管道
     QVector<BlockPipe *> m_Pipes;
     int m_PipeSpacing;
-    const int m_PipesCount = 4;
+    const int m_PipesCount = 3;
     QTimer * m_PiperTimer;  //控制管道
     int m_lastPipeIndex;
     void initPipes();
@@ -75,8 +76,12 @@ private:
      */
     void gameOver();
 
-    //
+    //滚动的绿地
     MoveGround * m_Ground;
+
+    //计分
+    Scoring * m_scor;
+    bool m_HaveScor;
     // QWidget interface
 protected:
     void mousePressEvent(QMouseEvent *);
