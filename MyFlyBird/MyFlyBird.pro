@@ -14,7 +14,8 @@ HEADERS += \
     blockpipe.h \
     moveground.h \
     scoring.h \
-    startview.h
+    startview.h \
+    gameoverview.h
 
 SOURCES += \
     flybird.cpp \
@@ -23,4 +24,5 @@ SOURCES += \
     blockpipe.cpp \
     moveground.cpp \
     scoring.cpp \
-    startview.cpp
+    startview.cpp \
+    gameoverview.cpp

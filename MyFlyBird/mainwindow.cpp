@@ -30,14 +30,6 @@ MainWindow::MainWindow(QWidget *parent) :
     m_birdHeight = 0;
 
     initBirdFlyData();
-    //重新开始按钮
-    start_Button=new QPushButton(this);
-    start_Button->setStyleSheet
-            ("QPushButton {border-image: url(://Images/replay.png);}");
-    start_Button->setFixedSize(140,80);
-    start_Button->move((WINDOWWHITE-start_Button->width())/2,WINDOWHEIGHT/2);
-    connect(start_Button,SIGNAL(clicked()),this,SLOT(startGame()));
-    start_Button->setVisible(false);
 
     m_Ground = new MoveGround(this);
     m_Ground->move(0,WINDOWHEIGHT - 60);
@@ -51,7 +43,13 @@ MainWindow::MainWindow(QWidget *parent) :
     m_startView->setFixedSize(WINDOWWHITE,WINDOWHEIGHT);
     connect(m_startView,SIGNAL(clicked()),this,SLOT(startViewEnable()));
     connect(m_startView,SIGNAL(clicked()),this,SLOT(startGame()));
-    m_startView->show();
+
+    m_overViewTimer= new QTimer(this);
+    m_overView =new GameOverView(this);
+    m_overView->setFixedSize(WINDOWWHITE,WINDOWHEIGHT);
+    m_overView->setVisible(false);
+    connect(m_overView,SIGNAL(clicked()),this,SLOT(startGame()));
+    connect(m_overViewTimer,SIGNAL(timeout()),this,SLOT(overViewShow()));
 }
 
 void MainWindow::InitBird()
@@ -79,7 +77,7 @@ void MainWindow::initBirdFlyData()
 
 void MainWindow::mousePressEvent(QMouseEvent * event)
 {
-    if((event->button()==Qt::LeftButton)&&m_Bird->pos().y()>0&&!start_Button->isVisible())
+    if((event->button()==Qt::LeftButton)&&m_Bird->pos().y()>0&&!m_overView->isVisible())
     {
         m_birdFlyIterator=m_birdFlyData.begin();
         emit m_Bird->fly();
@@ -111,11 +109,14 @@ void MainWindow::startGame()
     }
     InitBird();
     createPipes();
+    m_scor->setVisible(true);
+    m_scor->TotalScor(0);
     m_Ground->play();
-    start_Button->setVisible(false);
+    m_overView->setVisible(false);
     int timeIter=8;
     m_birdTimer->start(timeIter);
     m_PiperTimer->start(timeIter);
+    m_birdFlyIterator=m_birdFlyData.begin();
 }
 
 void MainWindow::initPipes()
@@ -143,19 +144,21 @@ void MainWindow::pipeManage()
     int pipY;
     for(int i =0; i<m_PipesCount;i++) {
         m_Pipes[i]->move(m_Pipes[i]->pos().x()-1,m_Pipes[i]->pos().y());
+        //计分
+        if(m_Pipes[i]->pos().x()<(m_Bird->pos().x()-m_Pipes[i]->width())&&!m_HaveScor) {
+            m_scor->TotalScor();
+            m_HaveScor = true;
+             //break;
+        }
+
         if(m_Pipes[i]->pos().x()<-60) {
             pipY = qrand()%180;
             m_Pipes[i]->move(m_Pipes[m_lastPipeIndex]->pos().x()+m_PipeSpacing,pipY-210);
             m_lastPipeIndex=i;
             m_HaveScor = false;
-            break;
+            //break;
         }
-        //计分
-        if(m_Pipes[i]->pos().x()<(m_Bird->pos().x()-m_Pipes[i]->width())&&!m_HaveScor) {
-            m_scor->TotalScor();
-            m_HaveScor = true;
-             break;
-        }
+
     }
 }
 
@@ -175,11 +178,29 @@ void MainWindow::collisionDetect()
     }
 }
 
+
+
 void MainWindow::gameOver()
 {
+    if(m_overView->isVisible())
+        return;
     m_Ground->stop();
     m_PiperTimer->stop();
-    start_Button->setVisible(true);
+    m_HaveScor=false;
+    m_scor->setVisible(false);
+    m_overView->SetScor(m_scor->getScor());
+    m_overView->move(-200,m_overView->pos().y());
+    m_overView->setVisible(true);
+    m_overViewTimer->start(8);
+}
+void MainWindow::overViewShow()
+{
+    if(m_overView->pos().x()<0) {
+        m_overView->move(m_overView->pos().x()+1,m_overView->pos().y());
+    }
+    else {
+        m_overViewTimer->stop();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -190,6 +211,7 @@ MainWindow::~MainWindow()
     delete m_PiperTimer;
     delete m_scor;
     delete m_startView;
+    delete m_overViewTimer;
 }
 
 void MainWindow::startViewEnable()

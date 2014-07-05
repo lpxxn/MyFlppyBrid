@@ -8,7 +8,7 @@ class Scoring : public QWidget
     Q_OBJECT
 public:
     explicit Scoring(QWidget *parent = 0);
-    void TotalScor();
+    void TotalScor(int value =-1);
     int getScor();
 signals:
 

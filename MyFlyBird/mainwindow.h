@@ -9,6 +9,8 @@
 #include "moveground.h"
 #include "scoring.h"
 #include "startview.h"
+#include "gameoverview.h"
+
 class QPushButton;
 class MainWindow : public QMainWindow
 {
@@ -48,6 +50,11 @@ public slots:
      * 碰撞测试
      */
     void collisionDetect();
+
+    /*!
+     * \brief overViewShow
+     */
+    void overViewShow();
 private:
     StartView * m_startView;
 
@@ -55,7 +62,6 @@ private:
     QTimer * m_birdTimer;   //控制小鸟飞行
     enum e_WinSize{WINDOWWHITE = 360,WINDOWHEIGHT = 500};
     double m_birdHeight;
-    QPushButton *start_Button;
     void InitBird();
     QVector<double> m_birdFlyData;
     QVector<double>::iterator m_birdFlyIterator;
@@ -91,6 +97,8 @@ private:
     //计分
     Scoring * m_scor;
     bool m_HaveScor;
+    QTimer * m_overViewTimer;
+    GameOverView * m_overView;
     // QWidget interface
 protected:
     void mousePressEvent(QMouseEvent *);

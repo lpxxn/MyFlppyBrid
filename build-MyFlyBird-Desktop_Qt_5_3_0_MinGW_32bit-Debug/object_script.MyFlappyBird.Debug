@@ -6,6 +6,7 @@ INPUT(
 ./debug\moveground.o
 ./debug\scoring.o
 ./debug\startview.o
+./debug\gameoverview.o
 ./debug\qrc_MyResource.o
 ./debug\moc_flybird.o
 ./debug\moc_mainwindow.o
@@ -13,4 +14,5 @@ INPUT(
 ./debug\moc_moveground.o
 ./debug\moc_scoring.o
 ./debug\moc_startview.o
+./debug\moc_gameoverview.o
 );
