@@ -5,10 +5,12 @@ INPUT(
 ./debug\blockpipe.o
 ./debug\moveground.o
 ./debug\scoring.o
+./debug\startview.o
 ./debug\qrc_MyResource.o
 ./debug\moc_flybird.o
 ./debug\moc_mainwindow.o
 ./debug\moc_blockpipe.o
 ./debug\moc_moveground.o
 ./debug\moc_scoring.o
+./debug\moc_startview.o
 );

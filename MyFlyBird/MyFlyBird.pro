@@ -13,7 +13,8 @@ HEADERS += \
     mainwindow.h \
     blockpipe.h \
     moveground.h \
-    scoring.h
+    scoring.h \
+    startview.h
 
 SOURCES += \
     flybird.cpp \
@@ -21,4 +22,5 @@ SOURCES += \
     mainwindow.cpp \
     blockpipe.cpp \
     moveground.cpp \
-    scoring.cpp
+    scoring.cpp \
+    startview.cpp

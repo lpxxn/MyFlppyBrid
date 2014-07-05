@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     this->setFixedSize(WINDOWWHITE,WINDOWHEIGHT);
     this->setStyleSheet("background-image: url(://Images/bg.png)");
+
     //管道
     initPipes();
     createPipes();
@@ -29,13 +30,14 @@ MainWindow::MainWindow(QWidget *parent) :
     m_birdHeight = 0;
 
     initBirdFlyData();
-
+    //重新开始按钮
     start_Button=new QPushButton(this);
     start_Button->setStyleSheet
             ("QPushButton {border-image: url(://Images/replay.png);}");
     start_Button->setFixedSize(140,80);
     start_Button->move((WINDOWWHITE-start_Button->width())/2,WINDOWHEIGHT/2);
     connect(start_Button,SIGNAL(clicked()),this,SLOT(startGame()));
+    start_Button->setVisible(false);
 
     m_Ground = new MoveGround(this);
     m_Ground->move(0,WINDOWHEIGHT - 60);
@@ -43,11 +45,18 @@ MainWindow::MainWindow(QWidget *parent) :
     //计分
     m_scor = new Scoring(this);
     m_scor->move((WINDOWWHITE - m_scor->width())/2,50);
+    m_scor->setVisible(false);
+    //开始窗体
+    m_startView = new StartView(this);
+    m_startView->setFixedSize(WINDOWWHITE,WINDOWHEIGHT);
+    connect(m_startView,SIGNAL(clicked()),this,SLOT(startViewEnable()));
+    connect(m_startView,SIGNAL(clicked()),this,SLOT(startGame()));
+    m_startView->show();
 }
 
 void MainWindow::InitBird()
 {
-    m_Bird->move(QPoint(70,150));
+    m_Bird->move(QPoint(85,240));
     m_Bird->setRale(-50);
 }
 
@@ -97,6 +106,9 @@ void MainWindow::birdFlppy()
 
 void MainWindow::startGame()
 {
+    if(!m_scor->isVisible()) {
+        m_scor->setVisible(true);
+    }
     InitBird();
     createPipes();
     m_Ground->play();
@@ -177,5 +189,11 @@ MainWindow::~MainWindow()
     delete m_birdTimer;
     delete m_PiperTimer;
     delete m_scor;
+    delete m_startView;
+}
+
+void MainWindow::startViewEnable()
+{
+    m_startView->close();
 }
 

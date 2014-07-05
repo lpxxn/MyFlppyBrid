@@ -5,10 +5,12 @@ INPUT(
 ./release\blockpipe.o
 ./release\moveground.o
 ./release\scoring.o
+./release\startview.o
 ./release\qrc_MyResource.o
 ./release\moc_flybird.o
 ./release\moc_mainwindow.o
 ./release\moc_blockpipe.o
 ./release\moc_moveground.o
 ./release\moc_scoring.o
+./release\moc_startview.o
 );

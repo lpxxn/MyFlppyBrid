@@ -8,6 +8,7 @@
 #include "blockpipe.h"
 #include "moveground.h"
 #include "scoring.h"
+#include "startview.h"
 class QPushButton;
 class MainWindow : public QMainWindow
 {
@@ -18,6 +19,12 @@ public:
 signals:
 
 public slots:
+
+    /*!
+     * \brief startViewEnable
+     * 开始窗体
+     */
+    void startViewEnable();
     /*!
      * \brief birdFlppy
      * 小鸟飞行
@@ -42,6 +49,8 @@ public slots:
      */
     void collisionDetect();
 private:
+    StartView * m_startView;
+
     FlyBird *m_Bird;
     QTimer * m_birdTimer;   //控制小鸟飞行
     enum e_WinSize{WINDOWWHITE = 360,WINDOWHEIGHT = 500};

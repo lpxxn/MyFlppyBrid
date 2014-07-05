@@ -18,7 +18,7 @@ FlyBird::FlyBird(QWidget *parent) :
     timer = new QTimer(this);
     connect(timer,SIGNAL(timeout()),this,SLOT(update()));
     connect(this,SIGNAL(fly()),this,SLOT(updateRale()));
-    timer->start(200);
+    timer->start(50);
 
     m_birdImage<<"://Images/bird1.png"<<"://Images/bird2.png"<<"://Images/bird3.png";
 }
